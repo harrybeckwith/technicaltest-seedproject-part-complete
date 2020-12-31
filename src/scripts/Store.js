@@ -15,7 +15,25 @@ class Store extends Observable {
   }
 
   filter() {
-    return this.state.deals;
+    // filtering by _broadband_ **THEN** show the **4** broadband only deals
+    console.log(this.state.deals);
+
+    // filter out for broadband only
+
+    const products = [...this.state.deals];
+
+    if (this.state.productFilters[0] === "broadband") {
+      const c = products.filter(item => {
+        return (
+          !item.productTypes.some(a => a === "TV") &&
+          !item.productTypes.some(a => a === "Mobile")
+        );
+      });
+
+      return c;
+    } else {
+      return products;
+    }
   }
 
   setDeals(data) {
@@ -24,6 +42,7 @@ class Store extends Observable {
   }
 
   setProductFilter(value) {
+    console.log(value);
     const filter = value.trim().toLowerCase();
     const index = this.state.productFilters.indexOf(filter);
     if (index === -1) {
@@ -31,6 +50,7 @@ class Store extends Observable {
     } else {
       this.state.productFilters.splice(index, 1);
     }
+
     this.notify(this.state);
   }
 

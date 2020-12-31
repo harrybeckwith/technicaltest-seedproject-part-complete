@@ -39,11 +39,12 @@ class ViewFilters {
   }
 
   onProductFilterChange(event) {
+    console.log("onProductFilterChange", event.target.value);
     this.store.setProductFilter(event.target.value);
   }
 
   onProviderFilterChange(event) {
-    const value = parseInt(event.target.value, 10)
+    const value = parseInt(event.target.value, 10);
     this.providerFilters.forEach(element => (element.checked = false));
     if (this.store.state.providerFilter === value) {
       this.store.setProviderFilter();
@@ -54,6 +55,7 @@ class ViewFilters {
   }
 
   update(state) {
+    
     if (state.deals.length) {
       this.providerFilters.forEach(element => {
         element.hasAttribute("disabled") && element.removeAttribute("disabled");
